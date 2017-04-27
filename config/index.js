@@ -1,10 +1,9 @@
 'use strict';
 
 const config = {
-    development: require('./development'),
-    production: require('./production'),
-    staging: require('./staging'),
-    test: require('./test')
+  development: require('./development'),
+  production: require('./production'),
+  test: require('./test')
 };
 
 /* istanbul ignore next */
