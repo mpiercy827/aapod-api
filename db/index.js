@@ -5,4 +5,4 @@ const Knex     = require('knex')(DbConfig);
 const Db       = require('bookshelf')(Knex);
 
 exports.db   = Db;
-exports.knex = Knex;
+exports.Knex = Knex;

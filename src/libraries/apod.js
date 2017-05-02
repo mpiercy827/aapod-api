@@ -13,8 +13,8 @@ exports.fetch = (date) => {
   }
 
   return request({uri: apod_url, json: true})
-    .catch((err) => {
-      /* istanbul ignore next */
-      throw err;
-    });
+  .catch((err) => {
+    /* istanbul ignore next */
+    throw err;
+  });
 };
