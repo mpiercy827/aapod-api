@@ -2,8 +2,6 @@
 
 const APOD = require('../../src/libraries/apod');
 
-const PROPERTIES = ['copyright', 'date', 'explanation', 'hdurl', 'media_type', 'service_version', 'title', 'url'];
-
 describe('APOD', () => {
 
   describe('fetch', () => {
@@ -12,7 +10,12 @@ describe('APOD', () => {
       return APOD.fetch()
       .then((response) => {
         expect(response).to.be.an.object;
-        expect(response).to.have.all.keys(PROPERTIES);
+        expect(response.date).to.exist;
+        expect(response.explanation).to.exist;
+        expect(response.media_type).to.exist;
+        expect(response.service_version).to.exist;
+        expect(response.title).to.exist;
+        expect(response.url).to.exist;
       });
     });
 
@@ -22,8 +25,15 @@ describe('APOD', () => {
       return APOD.fetch(date)
       .then((response) => {
         expect(response).to.be.an.object;
-        expect(response).to.have.all.keys(PROPERTIES);
+        expect(response.date).to.exist;
         expect(response.date).to.eql(date);
+        expect(response.explanation).to.exist;
+        expect(response.media_type).to.exist;
+        expect(response.service_version).to.exist;
+        expect(response.title).to.exist;
+        expect(response.url).to.exist;
+        expect(response.hdurl).to.exist;
+        expect(response.copyright).to.exist;
       });
     });
 
