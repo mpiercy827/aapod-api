@@ -1,13 +1,14 @@
 'use strict';
 
 const Path     = require('path');
-const Sinon    = require('sinon');
 const request  = require('request-promise');
 const Bluebird = require('bluebird');
 
 const Config = require('../../config');
 
 const S3Helper = require('../../src/libraries/s3Helper');
+
+const Helper = require('../helper');
 
 const BAD_IMAGE_URL = 'http://www.google.com/bad_image_url.jpg';
 
@@ -21,6 +22,9 @@ describe('S3Helper', () => {
         expect(response).to.be.an.object;
         expect(response.key).to.eql('test.jpg');
         expect(response.Bucket).to.eql(Config.AWS_ASSET_BUCKET);
+      })
+      .finally(() => {
+        return Helper.deleteS3Object('test.jpg');
       });
     });
 
