@@ -2,6 +2,8 @@
 
 const Chai = require('chai');
 
-Chai.use(require('chai-as-promised'));
+Chai
+.use(require('chai-as-promised'))
+.use(require('sinon-chai'));
 
 global.expect = Chai.expect;
