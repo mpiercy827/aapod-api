@@ -20,9 +20,10 @@ exports.download = (date) => {
 
 exports.saveImageMedia = (apodData) => {
   const dateToBucketKey = (date, url) => {
-    const fileExtension = url.split('.').pop();
+    const fileExtension   = url.split('.').pop();
+    const dateWithSlashes = date.replace(new RegExp('-', 'g'), '/');
 
-    return date.replace(new RegExp('-', 'g'), '/') + '.' + fileExtension;
+    return `${dateWithSlashes}.${fileExtension}`;
   };
 
   let attributes = {
@@ -37,7 +38,7 @@ exports.saveImageMedia = (apodData) => {
 
   return S3Helper.uploadToS3(bucketKey, apodData.url)
   .then((s3Response) => {
-    attributes.url = URL_BASE + s3Response.Bucket + '/' + s3Response.Key;
+    attributes.url = `${URL_BASE}${s3Response.Bucket}/${s3Response.Key}`;
     return new Media(attributes).save();
   })
   .catch((err) => {

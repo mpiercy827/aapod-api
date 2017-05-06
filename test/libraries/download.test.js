@@ -30,7 +30,7 @@ describe('Downlaod', () => {
       .then((media) => {
         expect(media).to.be.an.object;
         expect(media.get('date')).to.eql('2017-04-30');
-        expect(media.get('url')).to.eql(URL_BASE + Config.AWS_ASSET_BUCKET + '/2017/04/30.jpg');
+        expect(media.get('url')).to.eql(`${URL_BASE}${Config.AWS_ASSET_BUCKET}/2017/04/30.jpg`);
       })
       .finally(() => {
         return S3Helper.uploadToS3.restore();
