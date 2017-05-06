@@ -8,6 +8,8 @@ module.exports = {
   DATABASE_DATABASE: 'aapod_local',
   DATABASE_HOST: 'localhost',
   DATABASE_PASSWORD: '',
+  DATABASE_PORT: 5432,
   DATABASE_USER: 'aapod_user',
+  PORT: 3000,
   S3_TEST_URL: process.env.S3_TEST_URL
 }
