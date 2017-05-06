@@ -18,6 +18,6 @@ exports.seed = () => {
     date.subtract(1, 'days');
   }
 
-  return Bluebird.map(dates, Download.download);
+  return Bluebird.each(dates, Download.download);
 };
 
