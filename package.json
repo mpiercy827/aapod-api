@@ -20,6 +20,8 @@
     "bluebird": "^3.5.0",
     "bookshelf": "^0.10.3",
     "hapi": "^16.1.1",
+    "hapi-bookshelf-serializer": "^2.1.0",
+    "inject-then": "^2.0.9",
     "knex": "^0.12.9",
     "moment": "^2.18.1",
     "path": "^0.12.7",

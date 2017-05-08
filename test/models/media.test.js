@@ -8,10 +8,10 @@ describe('media model', () => {
 
   describe('serialize', () => {
 
-    it('should serialize an address properly', () => {
-      let media = Media.forge({
+    it('should serialize a media model properly', () => {
+      const media = Media.forge({
         id: 'id',
-        date: 'date',
+        date: '2017-05-07',
         type: 'type',
         url: 'url',
         title: 'title',
@@ -21,7 +21,7 @@ describe('media model', () => {
 
       expect(media.serialize()).to.eql({
         id: 'id',
-        date: 'date',
+        date: '2017-05-07',
         type: 'type',
         url: 'url',
         title: 'title',

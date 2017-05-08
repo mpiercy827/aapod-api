@@ -14,11 +14,14 @@ const server = new Hapi.Server({
 
 server.connection({ port: Config.PORT });
 
-server.route({
-  method: 'GET',
-  path: '/',
-  handler: (request, reply) => {
-    return reply('Hello World');
+server.register([
+  require('hapi-bookshelf-serializer'),
+  require('inject-then'),
+  require('./plugins/features/media')
+], (err) => {
+  /* istanbul ignore next */
+  if (err) {
+    throw err;
   }
 });
 
