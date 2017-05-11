@@ -15,6 +15,10 @@ exports.download = (date) => {
     } else {
       return exports.saveVideoMedia(response);
     }
+  })
+  .catch((err) => {
+    /* istanbul ignore next */
+    console.log(`Received ${err.statusCode} for ${date}`);
   });
 };
 
