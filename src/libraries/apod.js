@@ -1,5 +1,7 @@
 'use strict';
 
+const Bluebird = require('bluebird');
+
 const Config = require('../../config');
 
 const RETRY_MS      = 900000; // 15 minutes
