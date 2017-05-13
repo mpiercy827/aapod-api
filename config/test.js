@@ -11,5 +11,5 @@ module.exports = {
   DATABASE_PORT: 5432,
   DATABASE_USER: 'aapod_user',
   PORT: 3000,
-  S3_TEST_URL: process.env.S3_TEST_URL
+  S3_TEST_KEY: process.env.S3_TEST_KEY
 }

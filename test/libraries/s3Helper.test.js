@@ -10,29 +10,28 @@ const S3Helper = require('../../src/libraries/s3Helper');
 
 const Helper = require('../helper');
 
-const BAD_IMAGE_URL = 'http://www.google.com/bad_image_url.jpg';
-
 describe('S3Helper', () => {
 
   describe('uploadToS3', () => {
 
-    it('pulls a file from a valid url and uploads it to S3', () => {
-      return S3Helper.uploadToS3('test.jpg', Config.S3_TEST_URL)
+    it('uploads a local file to S3', () => {
+      return S3Helper.uploadToS3('test.jpg', Path.join(__dirname, '..', '..', 'assets/nasa_logo.jpg'))
       .then((response) => {
         expect(response).to.be.an.object;
-        expect(response.key).to.eql('test.jpg');
+        expect(response.ETag).to.exist;
         expect(response.Bucket).to.eql(Config.AWS_ASSET_BUCKET);
+        expect(response.Key).to.eql('test.jpg');
       })
       .finally(() => {
         return Helper.deleteS3Object('test.jpg');
       });
     });
 
-    it('fails for a bad file url', () => {
-      return S3Helper.uploadToS3('some-bucket-key', 'https://mock.codes/404')
+    it('fails for a bad file path', () => {
+      return S3Helper.uploadToS3('some-bucket-key', 'bad-image-path.png')
       .catch((err) => {
         expect(err.error).to.be.an.object;
-        expect(err.file).to.eql('https://mock.codes/404');
+        expect(err.file).to.eql('bad-image-path.png');
       });
     });
 

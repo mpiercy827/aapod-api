@@ -23,7 +23,6 @@ describe('Downlaod', () => {
       const key = '2017/04/30.jpg';
 
       const s3Stub = Sinon.stub(S3Helper, 'uploadToS3')
-        .withArgs(key, IMAGE_URL)
         .returns(Bluebird.resolve({Bucket: Config.AWS_ASSET_BUCKET, Key: key}));
 
       return Download.download('2017-04-30')

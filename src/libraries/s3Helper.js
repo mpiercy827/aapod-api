@@ -1,8 +1,8 @@
 'use strict';
 
+const Fs      = require('fs');
 const AWS     = require('aws-sdk');
 const Promise = require('bluebird');
-const request = require('request-promise');
 
 const Config = require('../../config');
 
@@ -14,28 +14,28 @@ exports.S3 = new AWS.S3({
   }
 });
 
-exports.uploadToS3 = (key, fileUrl) => {
-  return request(fileUrl)
-  .then((response) => {
-    return new Promise((resolve, reject) => {
-      exports.S3.upload({
-        Key: key,
-        Body: response,
-        ACL: 'public-read'
-      }, (err, data) => {
-        /* istanbul ignore next */
-        if (err) {
-          reject(err);
-        } else {
-          resolve(data);
-        }
-      });
-    })
+exports.uploadToS3 = (key, filePath) => {
+  return new Promise((resolve, reject) => {
+    const file = Fs.createReadStream(filePath);
+
+    return exports.S3.upload({
+      Key: key,
+      Body: file,
+      ACL: 'public-read'
+    }, (err, data) => {
+      /* istanbul ignore next */
+      if (err) {
+        reject(err);
+      } else {
+        resolve(data);
+      }
+    });
   })
   .catch((err) => {
     throw {
       error: err,
-      file: fileUrl
+      file: filePath
     };
   });
 };
+
