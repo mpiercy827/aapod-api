@@ -28,7 +28,9 @@
     "pg": "^6.1.5",
     "request": "^2.81.0",
     "request-promise": "^4.2.0",
-    "sinon-chai": "^2.10.0"
+    "rimraf": "^2.6.1",
+    "sinon-chai": "^2.10.0",
+    "temp": "^0.8.3"
   },
   "devDependencies": {
     "chai": "^3.5.0",

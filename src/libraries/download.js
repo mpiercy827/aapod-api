@@ -1,5 +1,11 @@
 'use strict';
 
+const Fs       = require('fs');
+const Temp     = require('temp');
+const Bluebird = require('bluebird');
+const Request  = require('request');
+const Rimraf   = Bluebird.promisify(require('rimraf'));
+
 const Media = require('../models/media').Media;
 
 const APOD     = require('./apod');
@@ -18,7 +24,7 @@ exports.download = (date) => {
   })
   .catch((err) => {
     /* istanbul ignore next */
-    console.log(`Received ${err.statusCode} for ${date}`);
+    console.log(`Failed to download media for ${date}`);
   });
 };
 
@@ -28,6 +34,25 @@ exports.saveImageMedia = (apodData) => {
     const dateWithSlashes = date.replace(new RegExp('-', 'g'), '/');
 
     return `${dateWithSlashes}.${fileExtension}`;
+  };
+
+  const downloadToTempFile = (url) => {
+    const tempPath = Temp.path({ dir: '/tmp' });
+
+    const writeStream = Fs.createWriteStream(tempPath);
+
+    return new Bluebird((resolve, reject) => {
+      Request(url)
+      .on('error', (err) => {
+        /* istanbul ignore next */
+        reject(err);
+      })
+      .pipe(writeStream);
+
+      writeStream.on('finish', () => {
+        resolve(tempPath);
+      });
+    });
   };
 
   let attributes = {
@@ -40,14 +65,23 @@ exports.saveImageMedia = (apodData) => {
 
   const bucketKey = dateToBucketKey(apodData.date, apodData.url);
 
-  return S3Helper.uploadToS3(bucketKey, apodData.url)
-  .then((s3Response) => {
-    attributes.url = `${URL_BASE}${s3Response.Bucket}/${s3Response.Key}`;
+  let filePath;
+
+  return downloadToTempFile(apodData.url)
+  .then((tempPath) => {
+    filePath = tempPath;
+    return S3Helper.uploadToS3(bucketKey, tempPath);
+  })
+  .then((response) => {
+    attributes.url = `${URL_BASE}${response.Bucket}/${response.Key}`;
     return new Media(attributes).save();
   })
   .catch((err) => {
     /* istanbul ignore next */
     throw err;
+  })
+  .finally(() => {
+    return Rimraf(filePath);
   });
 };
 
