@@ -6,6 +6,16 @@ exports.register = (server, options, next) => {
 
   server.route([{
     method: 'GET',
+    path: '/media/latest',
+    config: {
+      handler: (request, reply) => {
+        return reply(Controller.fetchLatest());
+      }
+    }
+  }]);
+
+  server.route([{
+    method: 'GET',
     path: '/media/{date}',
     config: {
       handler: (request, reply) => {
