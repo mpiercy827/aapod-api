@@ -14,11 +14,14 @@ const S3Helper = require('./s3Helper');
 const URL_BASE = 'https://s3-us-west-2.amazonaws.com/';
 
 exports.download = (date) => {
-  return APOD.fetch(date)
+  return new Media({ date: date }).fetch()
+  .then((media) => {
+    return media ? {} : APOD.fetch(date);
+  })
   .then((response) => {
     if (response.media_type === 'image') {
       return exports.saveImageMedia(response);
-    } else {
+    } else if (response.media_type === 'video') {
       return exports.saveVideoMedia(response);
     }
   })
