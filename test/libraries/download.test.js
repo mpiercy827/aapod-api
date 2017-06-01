@@ -45,6 +45,16 @@ describe('Downlaod', () => {
       });
     });
 
+    it('does not duplicate media', () => {
+      return Download.download('2016-05-11')
+      .then(() => {
+        return Download.download('2016-05-11');
+      })
+      .then((result) => {
+        expect(result).to.not.exist;
+      });
+    });
+
   });
 
 });
