@@ -42,4 +42,16 @@ describe('Controller', () => {
 
   });
 
+  describe('fetchLatest', () => {
+
+    it('fetches latest media object', () => {
+      return Controller.fetchLatest()
+      .then((media) => {
+        const formattedDate = Moment.utc(media.get('date')).format('YYYY-MM-DD');
+        expect(formattedDate).to.eql('2017-05-07');
+      });
+    });
+
+  });
+
 });
