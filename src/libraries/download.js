@@ -16,7 +16,12 @@ const URL_BASE = 'https://s3-us-west-2.amazonaws.com/';
 exports.download = (date) => {
   return APOD.fetch(date)
   .then((response) => {
-    return new Media({date: response.date}).fetch()
+    return new Media({
+      title: response.title,
+      type: response.media_type,
+      description: response.explanation
+    })
+    .fetch()
     .then((media) => {
       return media ? {} : response;
     });

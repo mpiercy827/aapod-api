@@ -46,9 +46,9 @@ describe('Downlaod', () => {
     });
 
     it('does not duplicate media', () => {
-      return Download.download('2016-05-11')
+      return Download.download()
       .then(() => {
-        return Download.download('2016-05-11');
+        return Download.download();
       })
       .then((result) => {
         expect(result).to.not.exist;
