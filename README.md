@@ -1,5 +1,7 @@
 # AAPOD API
 
+[![Build Status](https://travis-ci.org/mpiercy827/aapod-api.svg?branch=master)](https://travis-ci.org/mpiercy827/aapod-api)
+
 This is the API for AAPOD (Another Astronomy Picture of the Day), which is a personal project inspired by NASA's Astronomy Picture of the Day ([APOD](http://apod.nasa.gov)).
 
 ## Motivations
@@ -52,3 +54,4 @@ Currently, there are two endpoints for this API:
 * Implement a `/media/random` endpoint to fetch a random media model.
 * Implement a `/media/` endpoint for fetching collections, filtering, etc.
 * Implement an API key system with rate limits.
+* Implement search by keywords.
